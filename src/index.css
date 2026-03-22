@@ -1,0 +1,872 @@
+/*------------------------------------------------------------/
+/ IMPORTER OCH TYPSNITT /
+/------------------------------------------------------------*/
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&display=swap');
+
+/*------------------------------------------------------------/
+/ GLOBALA VARIABLER OCH FÄRGSCHEMA /
+/------------------------------------------------------------*/
+#root {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* Här definieras projektets huvudfärger */
+:root {
+  --color-light: #CAD2C5;
+  --color-sage: #84A98C;
+  --color-dark-sage: #52796F;
+  --color-slate: #354F52;
+  --color-charcoal: #2F3E46;
+}
+
+/* Klass för att förhindra textmarkering och kopiering */
+.no-copy {
+  -webkit-user-select: none;
+  /* Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE10+ */
+  user-select: none;
+  /* Standard */
+}
+
+/*------------------------------------------------------------/
+/ GRUNDLÄGGANDE ÅTERSTÄLLNING OCH STRUKTUR /
+/------------------------------------------------------------*/
+
+/* Nollställer marginaler och vaddering för alla element */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Hindrar innehåll från att sticka ut utanför skärmens bredd */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Grundläggande inställningar för hela dokumentet */
+html {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width: 100%;
+  background-color: var(--color-light);
+}
+
+/*------------------------------------------------------------/
+/ BODY INSTÄLLNINGAR OCH INTONINGSLOGIK /
+/------------------------------------------------------------*/
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+  background-color: var(--color-light);
+  color: var(--color-charcoal);
+  /* Startläge för sidans genomskinlighet */
+  transition: opacity 0.6s ease-in-out;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+/*------------------------------------------------------------/
+/ BRANDING OCH LOGOTYP /
+/------------------------------------------------------------*/
+
+/* Grundläggande stil för namnet uppe till vänster */
+.top-left-name {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-weight: 900;
+  font-size: 1.2rem;
+  color: var(--color-charcoal);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: opacity 0.4s ease;
+  z-index: 101;
+}
+
+/* Behållare för logotyp och meny på undersidor */
+body:not(.portfolio-page) .header-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 60px 5vw 0 5vw;
+  width: 100%;
+}
+
+/*------------------------------------------------------------/
+/ LADDNINGSSKÄRM OCH ANIMATIONSLOGIK /
+/------------------------------------------------------------*/
+
+#loader-bg {
+  position: fixed;
+  inset: 0;
+  background-color: var(--color-light);
+  z-index: 9999;
+  /* Väldigt högt så den täcker allt */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease-in-out, visibility 0.5s;
+}
+
+/* När klassen inte finns (isTransitioning är true i App.jsx) */
+#loader-bg.loader-finished {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Placering av namnet på alla sidor förutom portfolion */
+body:not(.portfolio-page) .top-left-name {
+  position: static;
+  display: flex;
+  flex-direction: column;
+  font-weight: 900;
+  font-size: 1.2rem;
+  color: var(--color-charcoal);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 40px;
+}
+
+/* Fast placering av namnet på själva portfolion */
+.portfolio-page .top-left-name {
+  position: fixed;
+  top: 30px;
+  left: 5vw;
+  width: 90vw;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 101;
+}
+
+/*------------------------------------------------------------/
+/ ANIMATIONER FÖR NAMNET /
+/------------------------------------------------------------*/
+
+.name-line {
+  display: inline-flex;
+  align-items: baseline;
+  line-height: 1;
+  pointer-events: auto;
+}
+
+.initial {
+  color: var(--color-dark-sage);
+  transform: translateX(100vw);
+  display: inline-block;
+}
+
+.expand {
+  color: var(--color-charcoal);
+  overflow: hidden;
+  max-width: 0;
+  white-space: nowrap;
+  opacity: 0;
+  display: inline-block;
+}
+
+/* Klasser som aktiverar animationerna via javascript */
+.run-anim .initial {
+  animation: slideInInitial 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.run-anim .expand {
+  animation: expandName 1s 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.no-anim .initial {
+  transform: translateX(0);
+}
+
+.no-anim .expand {
+  max-width: 400px;
+  opacity: 1;
+}
+
+@keyframes slideInInitial {
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes expandName {
+  from {
+    max-width: 0;
+    opacity: 0;
+  }
+
+  to {
+    max-width: 200px;
+    opacity: 1;
+  }
+}
+
+/*------------------------------------------------------------/
+/ NAVIGATION OCH LÄNKSTILAR /
+/------------------------------------------------------------*/
+
+/* Meny för undersidor som cv och kontakt */
+body:not(.portfolio-page) nav {
+  width: 100%;
+  padding: 0;
+}
+
+body:not(.portfolio-page) nav ul {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  margin: 0;
+}
+
+/* Meny för huvudportfolion som ligger centrerat på skärmen */
+.portfolio-page nav {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 100%;
+  padding: 0 5vw;
+  pointer-events: none;
+  z-index: 90;
+}
+
+.portfolio-page nav ul {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  pointer-events: auto;
+}
+
+/* Stil för navigeringslänkarna */
+nav a {
+  color: var(--color-charcoal);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: all 0.3s ease;
+}
+
+/* Utseende för länken när muspekaren hålls över eller när den är aktiv */
+nav a:hover,
+nav a.active {
+  color: var(--color-dark-sage);
+  border-bottom: 2px solid var(--color-dark-sage);
+}
+
+/*------------------------------------------------------------/
+/ PORTFOLIO LAYOUT OCH HORISONTELL SCROLL /
+/------------------------------------------------------------*/
+
+.full-screen-portfolio {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Behållare som tillåter sidledes scrollning genom projekten */
+.portfolio-scroll {
+  display: flex;
+  align-items: center;
+  gap: 20vw;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0 15vw;
+  scrollbar-width: none;
+}
+
+/* Döljer den inbyggda scrollisten i webbläsaren */
+.portfolio-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* Stil för varje enskilt projektkort */
+.project {
+  background: #fff;
+  padding: 5px;
+  border-radius: 12px;
+  box-shadow: 10px 10px 30px rgba(47, 62, 70, 0.1);
+  border-bottom: 6px solid var(--color-dark-sage);
+  flex: 0 0 auto;
+  width: 22vw;
+  /* Något smalare kort */
+  min-width: 280px;
+  max-width: 400px;
+  /* Snävare maxbredd för att spara plats */
+  max-height: 60vh;
+  /* Tvingar kortet att aldrig bli för högt vertikalt */
+  cursor: pointer;
+  transition: transform 0.5s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+/* Lyfter kortet när användaren håller muspekaren över det */
+.project:hover {
+  transform: scale(1.05) translateY(-10px);
+  box-shadow: 15px 15px 40px rgba(47, 62, 70, 0.2);
+}
+
+.project img {
+  width: 100%;
+  height: auto;
+  max-height: 40vh;
+  /* Begränsar själva bildens höjd */
+  object-fit: cover;
+  /* Ser till att bilden fyller ut snyggt även om den beskärs */
+  border-radius: 10px;
+}
+
+/* Skapar ett mönster där varannat kort flyttas uppåt eller nedåt */
+.project:nth-child(odd) {
+  translate: 0 -22vh;
+}
+
+.project:nth-child(even) {
+  translate: 0 22vh;
+}
+
+/*------------------------------------------------------------/
+/ SCROLL INDIKATOR OCH MÄTARE /
+/------------------------------------------------------------*/
+
+.scroll-indicator-wrap {
+  position: fixed;
+  bottom: 40px;
+  left: 20px;
+  display: none;
+  align-items: flex-end;
+  gap: 12px;
+  z-index: 90;
+}
+
+.portfolio-page .scroll-indicator-wrap {
+  display: flex;
+}
+
+.scroll-text {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  color: var(--color-slate);
+  font-weight: 600;
+  transition: opacity 0.5s ease;
+}
+
+/* Den vertikala mätaren som visar hur långt användaren scrollat */
+.progress-bar-container {
+  width: 2px;
+  height: 100px;
+  background-color: var(--color-sage);
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  width: 100%;
+  height: 0%;
+  background-color: var(--color-slate);
+  position: absolute;
+  bottom: 0;
+  transition: height 0.1s ease-out;
+}
+
+.scroll-hint {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  color: var(--color-slate);
+  font-weight: 600;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* Används för att dölja mätaren när man börjar scrolla iväg från starten */
+.scroll-hint.hidden,
+.scroll-text.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/*------------------------------------------------------------/
+/ CV OCH KONTAKT SIDOR GEMENSAM LAYOUT /
+/------------------------------------------------------------*/
+
+.cv-page,
+.contact-page {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 80px 5vw 50px 5vw;
+  box-sizing: border-box;
+}
+
+.cv-header h1,
+.contact-form-section h1 {
+  font-size: 3.5rem;
+  font-weight: 900;
+  border-bottom: 2px solid var(--color-sage);
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  color: var(--color-slate);
+}
+
+/* Skapar ett rutnät för innehållet i cv och kontakt */
+.cv-grid,
+.contact-wrapper {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 60px;
+  margin-top: 20px;
+  align-items: start;
+}
+
+.cv-main-col h2,
+.cv-side-col h2 {
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  border-bottom: 1px solid var(--color-sage);
+  padding-bottom: 10px;
+  margin-bottom: 25px;
+  margin-top: 50px;
+  color: var(--color-slate);
+}
+
+.cv-main-col p {
+  margin-bottom: 25px;
+}
+
+/* Stil för listan med kompetenser */
+.skills-list li {
+  background: var(--color-dark-sage);
+  color: white;
+  padding: 12px 20px;
+  margin-bottom: 12px;
+  border-radius: 5px;
+  border-left: 4px solid var(--color-charcoal);
+  list-style: none;
+}
+
+/*------------------------------------------------------------/
+/ KONTAKTFORMULÄR OCH INMATNING /
+/------------------------------------------------------------*/
+
+.contact-text-section {
+  padding-top: 20px;
+  margin-top: 15px;
+}
+
+.contact-text-section p {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--color-charcoal);
+}
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: var(--color-slate);
+}
+
+/* Stil för fält i formuläret */
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid var(--sage);
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 4px;
+  font-family: inherit;
+  color: var(--color-charcoal);
+  transition: border-color 0.3s;
+}
+
+/* Ändrar utseende när användaren klickar i ett fält */
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--color-dark-sage);
+  background-color: #fff;
+}
+
+/* Knapp för att skicka iväg formuläret */
+.submit-btn {
+  background-color: var(--color-slate);
+  color: white;
+  padding: 15px 40px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: background 0.3s;
+}
+
+.submit-btn:hover {
+  background-color: var(--color-dark-sage);
+}
+
+/*------------------------------------------------------------/
+/ MODAL FÖR PROJEKT POPUPS /
+/------------------------------------------------------------*/
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(47, 62, 70, 0.9);
+  backdrop-filter: blur(5px);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Innehållsrutan för popupen */
+.modal-content {
+  background-color: #fff;
+  border-top: 6px solid var(--color-dark-sage);
+  padding: 40px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 25px;
+  text-align: left;
+  position: relative;
+  animation: slideIn 0.3s ease;
+
+  text-align: center;
+  /* Centrerar text och knappar */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#modal-title,
+#modal-desc {
+  /* NYTT: Säkerställer att texten tar full bredd för att centreras */
+  text-align: center;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#modal-img {
+  width: 100%;
+  max-height: 45vh;
+  object-fit: contain;
+  margin-bottom: 25px;
+  border-radius: 8px;
+  display: block;
+}
+
+/* Stängningsknappen i popup rutan */
+.close {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  font-size: 35px;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--color-sage);
+  line-height: 1;
+}
+
+.close:hover {
+  transform: scale(1.1);
+  color: var(--color-dark-sage);
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+#modal-title {
+  font-size: 2rem;
+  color: var(--color-slate);
+  margin-top: 10px;
+  margin-bottom: 15px;
+  line-height: 1.2;
+}
+
+#modal-desc {
+  font-size: 1.05rem;
+  color: var(--color-charcoal);
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+/* Behållare för länkar och knappar inuti popupen */
+.modal-links {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+/* Grundläggande form för alla knappar */
+.modal-btn {
+  display: inline-block;
+  padding: 14px 28px;
+  border-radius: 8px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  text-align: center;
+  color: #ffffff !important;
+  text-decoration: none !important;
+  border: none;
+  /* Ser till att ingen grå standardram syns */
+}
+
+/* Färg för "Besök hemsidan" (den ljusare teal-färgen från bild 2) */
+.modal-btn.primary-btn {
+  background-color: #48A6A7;
+}
+
+.modal-btn.primary-btn:hover {
+  background-color: #3d8f90;
+  transform: translateY(-2px);
+}
+
+/* Färg för "Läs mer här" (din mörkare sage-färg) */
+.modal-btn:not(.primary-btn):not(.secondary) {
+  background-color: var(--color-dark-sage);
+}
+
+.modal-btn:not(.primary-btn):not(.secondary):hover {
+  background-color: #42635a;
+  transform: translateY(-2px);
+}
+
+/* Färg för "Se koden på GitHub" (mörkgrå) */
+.modal-btn.secondary {
+  background-color: var(--color-charcoal);
+}
+
+.modal-btn.secondary:hover {
+  background-color: #1a252b;
+  transform: translateY(-2px);
+}
+
+/*------------------------------------------------------------/
+/ RESPONSIV DESIGN FÖR MOBIL OCH SURFPLATTA /
+/------------------------------------------------------------*/
+
+@media (max-width: 1024px) {
+
+  /* Ändrar sidhuvudet till att staplas vertikalt på mobila enheter */
+  body:not(.portfolio-page) .header-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 5vw 0 5vw;
+    gap: 20px;
+  }
+
+  body:not(.portfolio-page) .top-left-name {
+    align-items: center;
+  }
+
+  body:not(.portfolio-page) nav {
+    padding: 0;
+  }
+
+  body:not(.portfolio-page) nav ul {
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .portfolio-page nav ul {
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  /* Gör att innehållsrutor för cv och kontakt fyller hela bredden */
+  .cv-grid,
+  .contact-wrapper {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .cv-header h1,
+  .contact-form-section h1 {
+    font-size: 2.5rem;
+  }
+
+  /* Ändrar portfolion från sidledes scroll till vanlig vertikal vy för mobiler */
+  .full-screen-portfolio {
+    display: block !important;
+    height: auto !important;
+    min-height: 100vh;
+    overflow: visible !important;
+  }
+
+  .portfolio-scroll {
+    display: flex;
+    flex-direction: column;
+    height: auto !important;
+    overflow: visible !important;
+    padding: 120px 5vw 80px 5vw;
+    gap: 50px;
+    transform: none !important;
+  }
+
+  .project {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .project:nth-child(odd),
+  .project:nth-child(even) {
+    translate: 0 0;
+  }
+
+  .portfolio-page nav {
+    padding-top: 80px;
+    position: absolute;
+    top: 0;
+    transform: none;
+    pointer-events: auto;
+  }
+
+  .progress-bar-container {
+    width: 3px;
+    height: 100px;
+  }
+
+  .scroll-indicator-wrap {
+    left: 4px;
+    bottom: 20px;
+  }
+
+  /* Gömmer de visuella scroll texterna på mobil */
+  .scroll-hint,
+  .scroll-text {
+    display: none !important;
+  }
+}
+
+/*------------------------------------------------------------/
+/ UTSKRIFTSFORMAT /
+/------------------------------------------------------------*/
+
+@media print {
+
+  nav,
+  .portfolio-scroll,
+  .submit-btn,
+  .scroll-indicator-wrap {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    color: black;
+    opacity: 1;
+  }
+}
+
+/*------------------------------------------------------------/
+/ easter egg /
+/------------------------------------------------------------*/
+
+
+/* PÅSKÄGG 2: DARK MODE */
+body.dark-theme {
+  --color-light: #1a1c20;
+  /* Mörkgrå bakgrund istället för ljus */
+  --color-charcoal: #e2e8f0;
+  /* Nästan vit text istället för mörk */
+  --color-slate: #9ABF80;
+  /* Ljusgrön som primär accent */
+  --color-sage: #48A6A7;
+  /* Blågrön som sekundär */
+
+  background-color: var(--color-light);
+  color: var(--color-charcoal);
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* Se till att laddningsskärmen också blir mörk i Dark Mode */
+body.dark-theme #loader-bg {
+  background-color: var(--color-light);
+}
+
+/* Korten på startsidan i Dark Mode */
+body.dark-theme .project {
+  background-color: #2a2d35;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Formulärfälten i Dark Mode */
+body.dark-theme input,
+body.dark-theme textarea {
+  background-color: #2a2d35;
+  color: var(--color-charcoal);
+  border: 1px solid #3f4450;
+}
+
+/* PÅSKÄGG 1: JONATHAN MODE (Genomskinlig sida) */
+body.jonathan-theme {
+  background-color: transparent !important;
+}
+
+/* Gör alla containrar genomskinliga så bilderna syns igenom */
+body.jonathan-theme .cv-page,
+body.jonathan-theme .cv-main-col,
+body.jonathan-theme .cv-side-col,
+body.jonathan-theme .cv-sidebar-box,
+body.jonathan-theme .about-content,
+body.jonathan-theme .about-text,
+body.jonathan-theme main {
+  background-color: transparent !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  /* Tar bort skuggor som ser konstiga ut mot bilderna */
+}
+
+/* Du vill troligtvis behålla vit text/bakgrund på "Laddar"-skärmen */
+body.jonathan-theme #loader-bg {}

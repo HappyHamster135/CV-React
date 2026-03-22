@@ -1,0 +1,20 @@
+{
+    "experience": [
+        {
+            "title": "Stridsvagnsskytt, Boden",
+            "period": "2022-2023",
+            "description": "Utvecklade stark disciplin och förmåga att samarbeta med människor från olika bakgrunder."
+        },
+        {
+            "title": "Supporttekniker, Folkuniversitetet",
+            "period": "2019-2021",
+            "description": "Ansvarade för underhåll av nätverk och teknisk support, samt utvecklade säkerhetsprogram för användare."
+        }
+    ],
+    "education": [
+        {
+            "title": ".NET-utveckling, Chas Academy",
+            "description": "Studerar programmering i C#, Java och SQL-databaser med fokus på objektorienterad utveckling."
+        }
+    ]
+}
