@@ -1,11 +1,11 @@
-import { useNavigate, Link } from 'react-router-dom'; // Lade till Link här
+import { useNavigate, Link } from 'react-router-dom';
 
-export default function Jobbigt({ setIsTransitioning }) { // Lade till proppen här
+export default function Jobbigt({ setIsTransitioning }) {
     const navigate = useNavigate();
 
     const handleBack = (e) => {
         e.preventDefault();
-        setIsTransitioning(true); // Nu kommer denna fungera!
+        setIsTransitioning(true);
         setTimeout(() => {
             navigate('/');
         }, 500);

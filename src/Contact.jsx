@@ -29,7 +29,7 @@ export default function Contact() {
         <main className="cv-page no-copy">
             <div className="cv-header" style={{ marginBottom: '40px' }}>
                 <h1 style={{ borderBottom: 'none', marginBottom: 0 }}>Kontakta Mig</h1>
-                {/* Linjen under rubriken */}
+
                 <hr style={{ borderTop: '1px solid var(--color-sage)', opacity: 0.5, marginTop: '10px' }} />
             </div>
 

@@ -1,6 +1,6 @@
-import { useNavigate, Link } from 'react-router-dom'; // Viktigt: Importera Link
+import { useNavigate, Link } from 'react-router-dom';
 
-export default function Snoit({ setIsTransitioning }) { // Viktigt: Ta emot setIsTransitioning
+export default function Snoit({ setIsTransitioning }) {
     const navigate = useNavigate();
 
     const handleBack = (e) => {

@@ -31,7 +31,7 @@ export default function CV() {
                     </section>
                 </div>
 
-                {/* Här är din saknade sidomeny! */}
+
                 <aside className="cv-side-col">
                     <section className="cv-sidebar-box">
                         <h2>Kontakt</h2>

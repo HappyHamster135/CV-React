@@ -8,24 +8,28 @@ export default function Navbar({ setIsTransitioning }) {
     const location = useLocation();
     const isPortfolioPage = location.pathname === '/';
 
-    // Animationstajming för namnet
+    // Ser till att namnet animeras in lite fördröjt efter varje sidbyte
     useEffect(() => {
         setAnimClass('');
         const timer = setTimeout(() => {
             setAnimClass('run-anim');
         }, 800);
+
         return () => clearTimeout(timer);
     }, [location.pathname]);
 
-    // Funktion för att hantera "Fade Out -> Byt sida"
+    // Fördröjer routingen så att vi hinner spela upp övergångseffekten först
     const handleNavigation = (e, path) => {
         e.preventDefault();
-        if (location.pathname === path) return; // Gör inget om vi redan är på sidan
 
-        setIsTransitioning(true); // Starta Fade Out (vit skärm dyker upp)
+        // Onödigt att köra effekten om vi redan är på rätt sida
+        if (location.pathname === path) return;
 
+        setIsTransitioning(true);
+
+        // Ge fade-effekten 500ms att köra klart innan vi faktiskt navigerar
         setTimeout(() => {
-            navigate(path); // Byt sida efter 500ms när skärmen är vit
+            navigate(path);
         }, 500);
     };
 

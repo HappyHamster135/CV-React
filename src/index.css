@@ -817,31 +817,24 @@ nav a.active {
 /* PÅSKÄGG 2: DARK MODE */
 body.dark-theme {
   --color-light: #1a1c20;
-  /* Mörkgrå bakgrund istället för ljus */
   --color-charcoal: #e2e8f0;
-  /* Nästan vit text istället för mörk */
   --color-slate: #9ABF80;
-  /* Ljusgrön som primär accent */
   --color-sage: #48A6A7;
-  /* Blågrön som sekundär */
 
   background-color: var(--color-light);
   color: var(--color-charcoal);
   transition: background-color 0.5s ease, color 0.5s ease;
 }
 
-/* Se till att laddningsskärmen också blir mörk i Dark Mode */
 body.dark-theme #loader-bg {
   background-color: var(--color-light);
 }
 
-/* Korten på startsidan i Dark Mode */
 body.dark-theme .project {
   background-color: #2a2d35;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-/* Formulärfälten i Dark Mode */
 body.dark-theme input,
 body.dark-theme textarea {
   background-color: #2a2d35;
@@ -849,12 +842,10 @@ body.dark-theme textarea {
   border: 1px solid #3f4450;
 }
 
-/* PÅSKÄGG 1: JONATHAN MODE (Genomskinlig sida) */
 body.jonathan-theme {
   background-color: transparent !important;
 }
 
-/* Gör alla containrar genomskinliga så bilderna syns igenom */
 body.jonathan-theme .cv-page,
 body.jonathan-theme .cv-main-col,
 body.jonathan-theme .cv-side-col,
@@ -865,8 +856,6 @@ body.jonathan-theme main {
   background-color: transparent !important;
   background: transparent !important;
   box-shadow: none !important;
-  /* Tar bort skuggor som ser konstiga ut mot bilderna */
 }
 
-/* Du vill troligtvis behålla vit text/bakgrund på "Laddar"-skärmen */
 body.jonathan-theme #loader-bg {}

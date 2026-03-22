@@ -1,6 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import jobbigtImg from './images/Jobbigt.png';
+import snoitImg from './images/snoit.png';
+
 export default function Home({ setIsTransitioning, toggleDarkMode }) {
     const [projects, setProjects] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -10,7 +13,6 @@ export default function Home({ setIsTransitioning, toggleDarkMode }) {
     const scrollContainerRef = useRef(null);
     const scrollBarRef = useRef(null);
 
-    // Funktion för att navigera med animation
     const handleActionNavigation = (e, path) => {
         e.preventDefault();
         setIsTransitioning(true);
@@ -19,22 +21,21 @@ export default function Home({ setIsTransitioning, toggleDarkMode }) {
         }, 500);
     };
 
-    // 1. HÄMTA PROJEKTEN
     useEffect(() => {
         const manualProjects = [
             {
                 id: 'jobbigt',
                 name: 'Jobbigt AI-driven RPA',
-                description: 'En intelligent bot som automatiserar jobbsökande genom att matcha ditt CV mot annonser och skriva personliga brev med hjälp av AI.',
-                image: '/images/Jobbigt.png',
+                description: 'En intelligent bot som automatiserar jobbsökande...',
+                image: jobbigtImg,
                 html_url: 'https://github.com/HappyHamster135/ai-job-bot.git',
                 readMorePath: '/jobbigt'
             },
             {
                 id: 'snoit',
                 name: 'Snöit din guide till fjällen',
-                description: 'Realtidsdata för skandinaviska skidorter. En fullstack-lösning som kombinerar rå dataextraktion med moderna API-integrationer.',
-                image: '/images/snoit.png',
+                description: 'Realtidsdata för skandinaviska skidorter...',
+                image: snoitImg,
                 html_url: 'https://github.com/HappyHamster135/Snoit-hemsida.git',
                 live_url: 'https://snoit.eu',
                 readMorePath: '/snoit'
@@ -44,7 +45,6 @@ export default function Home({ setIsTransitioning, toggleDarkMode }) {
         fetch('https://api.github.com/users/HappyHamster135/repos')
             .then(res => res.json())
             .then(data => {
-                // Om GitHub blockerar (rate limit) är data ett objekt med ett felmeddelande
                 if (data.message) {
                     console.warn("GitHub API gräns nådd, visar bara egna projekt tills vidare.");
                     setProjects(manualProjects);
@@ -55,7 +55,7 @@ export default function Home({ setIsTransitioning, toggleDarkMode }) {
             })
             .catch(err => {
                 console.error(err);
-                setProjects(manualProjects); // Visa iallafall dina egna projekt om det kraschar
+                setProjects(manualProjects);
                 setIsLoading(false);
             });
     }, []);
@@ -91,7 +91,6 @@ export default function Home({ setIsTransitioning, toggleDarkMode }) {
                 currentScrollLeft += (targetScrollLeft - currentScrollLeft) * speed;
                 scrollContainer.scrollLeft = currentScrollLeft;
 
-                // Dölj element när man scrollar på dator
                 if (currentScrollLeft > 10) {
                     if (scrollHint) scrollHint.classList.add('hidden');
                     if (scrollText) scrollText.classList.add('hidden');
@@ -125,9 +124,7 @@ export default function Home({ setIsTransitioning, toggleDarkMode }) {
             if (window.innerWidth <= 1024) {
                 const currentScrollY = window.scrollY;
 
-                // --- NY KOD FÖR ATT FYLLA BAREN PÅ MOBIL ---
                 if (scrollBarRef.current) {
-                    // Räkna ut hur mycket av sidan som finns kvar att scrolla
                     const windowHeight = window.innerHeight;
                     const fullHeight = document.documentElement.scrollHeight;
                     const maxScrollY = fullHeight - windowHeight;
@@ -137,9 +134,7 @@ export default function Home({ setIsTransitioning, toggleDarkMode }) {
                         scrollBarRef.current.style.height = scrollPercentage + '%';
                     }
                 }
-                // -------------------------------------------
 
-                // Din befintliga kod för att dölja logga/text
                 if (currentScrollY > 10) {
                     if (scrollHint) scrollHint.classList.add('hidden');
                     if (scrollText) scrollText.classList.add('hidden');
@@ -174,7 +169,6 @@ export default function Home({ setIsTransitioning, toggleDarkMode }) {
         };
     }, [isLoading]);
 
-    // 3. RENDERA SIDAN
     return (
         <div className="portfolio-page no-copy">
             <main className="full-screen-portfolio">
@@ -204,7 +198,7 @@ export default function Home({ setIsTransitioning, toggleDarkMode }) {
                         </div>
 
                         <div className="scroll-indicator-wrap">
-                            {/* HÄR ÄR DEN HEMLIGA KNAPPEN */}
+
                             <div
                                 className="scroll-text"
                                 onClick={toggleDarkMode}

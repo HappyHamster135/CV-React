@@ -8,13 +8,16 @@ import Contact from './Contact';
 import Snoit from './Snoit';
 import Jobbigt from './Jobbigt';
 
+import jagImg from './images/Jag.jpg';
+import jag1Img from './images/Jag1.jpg';
+
 export default function App() {
   const [jonathanMode, setJonathanMode] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const location = useLocation();
 
-  // 1. Hantera rullning, body-klasser och sidövergångar
+  // Styr scroll och specifika klasser beroende på om vi är på startsidan eller inte
   useEffect(() => {
     if (location.pathname === '/') {
       document.body.classList.add('portfolio-page');
@@ -27,10 +30,10 @@ export default function App() {
     setIsTransitioning(false);
   }, [location.pathname]);
 
-  // 2. PÅSKÄGG 1: JONATHAN MODE (Nu utan mellanslag!)
+  // Hemligt easter egg: Användaren måste skriva in koden för att trigga jonathanMode
   useEffect(() => {
     let typedCode = '';
-    const secretJonathan = 'jonathanwenell'; // Uppdaterat!
+    const secretJonathan = 'jonathanwenell';
 
     const handleKeyDown = (e) => {
       typedCode += e.key.toLowerCase();
@@ -47,31 +50,29 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  // 3. Applicera Dark Mode OCH Jonathan Mode på body-taggen
+  // Uppdaterar body-klasserna när något av våra teman ändras
   useEffect(() => {
-    // Dark mode logik
     if (darkMode) {
       document.body.classList.add('dark-theme');
     } else {
       document.body.classList.remove('dark-theme');
     }
 
-    // NYTT: Jonathan mode logik (gör sidan genomskinlig)
     if (jonathanMode) {
       document.body.classList.add('jonathan-theme');
     } else {
       document.body.classList.remove('jonathan-theme');
     }
-  }, [darkMode, jonathanMode]); // Lägg till jonathanMode här i listan
+  }, [darkMode, jonathanMode]);
 
-  // Funktion som vi skickar till Home.jsx så att texten kan klickas på
+  // Skickas med som prop så att man kan toggla temat inifrån Home-komponenten
   const toggleDarkMode = () => {
     setDarkMode(prev => !prev);
   };
 
   return (
     <div className="app-container">
-      {/* 1. LADDNINGSSKÄRMEN (som tidigare) */}
+      {/* Vit fade-overlay som visas när vi byter sida */}
       <div
         id="loader-bg"
         className={!isTransitioning ? 'loader-finished' : ''}
@@ -82,12 +83,12 @@ export default function App() {
         }}
       ></div>
 
-      {/* 2. PÅSKÄGG 1: JONATHAN MODE (Flyttat hit och uppdaterat stilarna!) */}
+      {/* Rutnät av bilder som täcker hela skärmen bakom allt annat vid jonathanMode */}
       {jonathanMode && (
         <div style={{
-          position: 'fixed', // Låser den till hela fönstret
-          inset: 0,          // Täcker precis allt (topp, botten, vänster, höger)
-          zIndex: -1,        // Sätter den *bakom* allt annat innehåll
+          position: 'fixed',
+          inset: 0,
+          zIndex: -1,
           display: 'grid',
           gridTemplateColumns: 'repeat(10, 1fr)',
           gridTemplateRows: 'repeat(10, 1fr)',
@@ -96,7 +97,7 @@ export default function App() {
           {Array.from({ length: 100 }).map((_, i) => {
             const row = Math.floor(i / 10);
             const col = i % 10;
-            const img = (row + col) % 2 === 0 ? 'url("/images/Jag.jpg")' : 'url("/images/Jag1.jpg")';
+            const img = (row + col) % 2 === 0 ? `url(${jagImg})` : `url(${jag1Img})`;
             return (
               <div key={i} style={{ backgroundImage: img, backgroundSize: 'cover', backgroundPosition: 'center', animation: `fadeIn 0.4s ease forwards`, animationDelay: `${i * 25}ms`, opacity: 0 }} />
             );
@@ -104,10 +105,8 @@ export default function App() {
         </div>
       )}
 
-      {/* 3. NAVIGERINGEN */}
       <Navbar setIsTransitioning={setIsTransitioning} />
 
-      {/* 4. SIDORNA */}
       <Routes>
         <Route path="/" element={<Home setIsTransitioning={setIsTransitioning} toggleDarkMode={toggleDarkMode} />} />
         <Route path="/cv" element={<CV />} />
