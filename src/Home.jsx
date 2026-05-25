@@ -69,9 +69,10 @@ export default function Home({ setIsTransitioning, toggleDarkMode }) {
     const scrollContainer = scrollContainerRef.current;
     if (!scrollContainer) return;
 
-    let targetScrollLeft = 0;
     let currentScrollLeft = 0;
-    const speed = 0.03;
+    let velocity = 0;
+    const friction = 0.99;
+    const wheelMultiplier = 0.03;
     let animationFrameId;
 
     const siteLogo = document.getElementById("site-logo");
@@ -82,11 +83,7 @@ export default function Home({ setIsTransitioning, toggleDarkMode }) {
       if (window.innerWidth <= 1024) return;
       if (e.deltaX !== 0) return;
       e.preventDefault();
-      targetScrollLeft += e.deltaY;
-      const scrollInner = scrollInnerRef.current;
-      if (!scrollInner) return;
-      const maxScroll = scrollInner.scrollWidth - scrollContainer.clientWidth;
-      targetScrollLeft = Math.max(0, Math.min(targetScrollLeft, maxScroll));
+      velocity += e.deltaY * wheelMultiplier;
     };
 
     const update = () => {
@@ -97,32 +94,35 @@ export default function Home({ setIsTransitioning, toggleDarkMode }) {
           return;
         }
 
-        // Räkna maxScroll utifrån inner-bredd
         const maxScroll = scrollInner.scrollWidth - scrollContainer.clientWidth;
-        targetScrollLeft = Math.max(0, Math.min(targetScrollLeft, maxScroll));
 
-        // Snäpp till mål när väldigt nära, annars lerp
-        const delta = targetScrollLeft - currentScrollLeft;
-        if (Math.abs(delta) < 0.1) {
-          currentScrollLeft = targetScrollLeft;
-        } else {
-          currentScrollLeft += delta * speed;
+        currentScrollLeft += velocity;
+
+        if (currentScrollLeft < 0) {
+          currentScrollLeft = 0;
+          velocity = 0;
+        } else if (currentScrollLeft > maxScroll) {
+          currentScrollLeft = maxScroll;
+          velocity = 0;
         }
 
-        const velocity = targetScrollLeft - currentScrollLeft;
-        const skew = velocity * 0.01;
+        velocity *= friction;
 
-        // Flytta inner-diven med transform istället för scrollLeft
+        if (Math.abs(velocity) < 0.05) {
+          velocity = 0;
+        }
+
+        const skew = velocity * 0.15;
+
         scrollInner.style.transform = `translateX(${-currentScrollLeft}px) skewX(${skew}deg)`;
 
         // Disable hover under scroll
-        if (Math.abs(velocity) > 2) {
+        if (Math.abs(velocity) > 1) {
           scrollContainer.classList.add("is-scrolling");
         } else {
           scrollContainer.classList.remove("is-scrolling");
         }
 
-        // Logo + scroll hints
         if (currentScrollLeft > 10) {
           if (scrollHint) scrollHint.classList.add("hidden");
           if (scrollText) scrollText.classList.add("hidden");
