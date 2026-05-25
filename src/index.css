@@ -375,10 +375,6 @@ nav a.active {
   transform: translateZ(0) translateY(28vh) scale(1.05) translateY(-10px);
 }
 
-.portfolio-scroll.is-scrolling .project {
-  pointer-events: none;
-}
-
 /*------------------------------------------------------------/
 / SCROLL INDIKATOR OCH MÄTARE /
 /------------------------------------------------------------*/
@@ -567,16 +563,25 @@ nav a.active {
 /*------------------------------------------------------------/
 / MODAL FÖR PROJEKT POPUPS 
 /------------------------------------------------------------*/
+@keyframes fadeInModal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 
 .modal {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(47, 62, 70, 0.9);
-  backdrop-filter: blur(5px);
+  background: rgba(47, 62, 70, 0.92);
+  backdrop-filter: blur(2px);
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  animation: fadeInModal 0.2s ease;
 }
 
 .modal-content {
@@ -633,13 +638,40 @@ nav a.active {
 
 @keyframes slideIn {
   from {
-    transform: translateY(-50px);
+    transform: scale(0.95);
     opacity: 0;
   }
-
   to {
-    transform: translateY(0);
+    transform: scale(1);
     opacity: 1;
+  }
+}
+
+.modal.closing {
+  animation: fadeOutModal 0.2s ease forwards;
+}
+
+.modal.closing .modal-content {
+  animation: slideOut 0.2s ease forwards;
+}
+
+@keyframes fadeOutModal {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0.95);
+    opacity: 0;
   }
 }
 
@@ -794,7 +826,7 @@ nav a.active {
 
   .project:nth-child(odd),
   .project:nth-child(even) {
-    translate: 0 0;
+    transform: none !important;
   }
 
   .portfolio-page nav {

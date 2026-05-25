@@ -1,4 +1,5 @@
 import { useNavigate, Link } from "react-router-dom";
+import jobbigtImg from "./images/Jobbigt.png";
 
 export default function Jobbigt({ setIsTransitioning }) {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ export default function Jobbigt({ setIsTransitioning }) {
       <div className="cv-grid">
         <div className="cv-main-col">
           <img
-            src="/images/Jobbigt.png"
+            src={jobbigtImg}
             alt="Jobbigt Interface"
             style={{
               width: "100%",

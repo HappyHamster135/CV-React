@@ -9,19 +9,38 @@ export default function Home({ setIsTransitioning, toggleDarkMode }) {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedProject, setSelectedProject] = useState(null);
 
+  const [isClosing, setIsClosing] = useState(false);
+
   const navigate = useNavigate();
   const scrollContainerRef = useRef(null);
   const scrollBarRef = useRef(null);
 
   const scrollInnerRef = useRef(null);
 
+  const isModalOpenRef = useRef(false);
+
   const handleActionNavigation = (e, path) => {
     e.preventDefault();
+    setIsClosing(true);
     setIsTransitioning(true);
     setTimeout(() => {
+      setSelectedProject(null);
+      setIsClosing(false);
       navigate(path);
-    }, 500);
+    }, 250);
   };
+
+  const closeModal = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setSelectedProject(null);
+      setIsClosing(false);
+    }, 200); // matchar animation-duration nedan
+  };
+
+  useEffect(() => {
+    isModalOpenRef.current = !!selectedProject;
+  }, [selectedProject]);
 
   useEffect(() => {
     const manualProjects = [
@@ -87,6 +106,11 @@ export default function Home({ setIsTransitioning, toggleDarkMode }) {
     };
 
     const update = () => {
+      if (isModalOpenRef.current) {
+        animationFrameId = requestAnimationFrame(update);
+        return;
+      }
+
       if (window.innerWidth > 1024) {
         const scrollInner = scrollInnerRef.current;
         if (!scrollInner) {
@@ -115,13 +139,6 @@ export default function Home({ setIsTransitioning, toggleDarkMode }) {
         const skew = velocity * 0.15;
 
         scrollInner.style.transform = `translateX(${-currentScrollLeft}px) skewX(${skew}deg)`;
-
-        // Disable hover under scroll
-        if (Math.abs(velocity) > 1) {
-          scrollContainer.classList.add("is-scrolling");
-        } else {
-          scrollContainer.classList.remove("is-scrolling");
-        }
 
         if (currentScrollLeft > 10) {
           if (scrollHint) scrollHint.classList.add("hidden");
@@ -271,18 +288,15 @@ export default function Home({ setIsTransitioning, toggleDarkMode }) {
 
             {selectedProject && (
               <div
-                className="modal"
+                className={`modal ${isClosing ? "closing" : ""}`}
                 style={{ display: "flex" }}
-                onClick={() => setSelectedProject(null)}
+                onClick={closeModal}
               >
                 <div
                   className="modal-content"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <span
-                    className="close"
-                    onClick={() => setSelectedProject(null)}
-                  >
+                  <span className="close" onClick={closeModal}>
                     &times;
                   </span>
 

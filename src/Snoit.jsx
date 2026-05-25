@@ -1,4 +1,5 @@
 import { useNavigate, Link } from "react-router-dom";
+import snoitImg from "./images/snoit.png";
 
 export default function Snoit({ setIsTransitioning }) {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ export default function Snoit({ setIsTransitioning }) {
       <div className="cv-grid">
         <div className="cv-main-col">
           <img
-            src="/images/snoit.png"
+            src={snoitImg}
             alt="Snöit Interface"
             style={{
               width: "100%",
