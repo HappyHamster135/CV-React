@@ -1,20 +1,21 @@
 {
-    "experience": [
-        {
-            "title": "Stridsvagnsskytt, Boden",
-            "period": "2022-2023",
-            "description": "Utvecklade stark disciplin och förmåga att samarbeta med människor från olika bakgrunder."
-        },
-        {
-            "title": "Supporttekniker, Folkuniversitetet",
-            "period": "2019-2021",
-            "description": "Ansvarade för underhåll av nätverk och teknisk support, samt utvecklade säkerhetsprogram för användare."
-        }
-    ],
-    "education": [
-        {
-            "title": ".NET-utveckling, Chas Academy",
-            "description": "Studerar programmering i C#, Java och SQL-databaser med fokus på objektorienterad utveckling."
-        }
-    ]
+  "experience": [
+    {
+      "title": "Stridsvagnsskytt — Försvarsmakten, Boden",
+      "period": "2022 – 2023",
+      "description": "Genomförde militärtjänstgöring där jag utvecklade stark disciplin och förmågan att följa komplexa instruktioner under press. Lärde mig att samarbeta tätt med människor från helt olika bakgrunder i krävande miljöer. Detta är något jag tar med mig in i varje team jag jobbar i."
+    },
+    {
+      "title": "Supporttekniker — Folkuniversitetet, Stockholm",
+      "period": "2019 – 2021",
+      "description": "Ansvarade för teknisk support, underhåll och reparation av datorer och nätverk för att hålla driften stabil. Drev även interna säkerhetsutbildningar för att höja användarnas medvetenhet kring malware och digital säkerhet."
+    }
+  ],
+  "education": [
+    {
+      "title": ".NET-utveckling — Chas Academy, Stockholm",
+      "period": "2025 – pågående",
+      "description": "Yrkesförberedande utbildning med fokus på C# och Java samt arbete med SQL-databaser. Täcker objektorienterad programmering, databashantering och utveckling av fullstack-applikationer."
+    }
+  ]
 }
