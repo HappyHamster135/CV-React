@@ -2,7 +2,7 @@
   "name": "min-cv-app",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://github.com/HappyHamster135/CV-React.git",
+  "homepage": "https://jonathanwenell.se/",
   "type": "module",
   "scripts": {
     "predeploy": "npm run build",
