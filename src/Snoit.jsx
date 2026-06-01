@@ -47,7 +47,7 @@ export default function Snoit({ setIsTransitioning }) {
             kritisk information i ett blixtsnabbt och mobiloptimerat gränssnitt.
           </p>
 
-          <h2>Idén</h2>
+          <h2>Iden</h2>
           <p>
             Målet var att skapa en central knutpunkt för skidåkare. Istället för
             att navigera komplexa menyer på stora webbplatser får användaren

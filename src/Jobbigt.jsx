@@ -48,7 +48,7 @@ export default function Jobbigt({ setIsTransitioning }) {
             personliga touchen.
           </p>
 
-          <h2>Idén</h2>
+          <h2>Iden</h2>
           <p>
             Målet var att skapa en "end-to-end"-lösning där användaren bara
             behöver välja ett yrke och en ort, och sedan låta boten sköta

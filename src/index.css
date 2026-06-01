@@ -356,7 +356,7 @@ nav a.active {
   /* Begränsar själva bildens höjd */
   object-fit: cover;
   /* Ser till att bilden fyller ut snyggt även om den beskärs */
-  border-radius: 10px;
+  border-radius: 12px;
 }
 
 .project:nth-child(odd) {
@@ -601,6 +601,7 @@ nav a.active {
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow: hidden;
 }
 
 #modal-title,
@@ -616,8 +617,8 @@ nav a.active {
   max-height: 45vh;
   object-fit: contain;
   margin-bottom: 25px;
-  border-radius: 8px;
   display: block;
+  border-radius: 16px !important;
 }
 
 .close {

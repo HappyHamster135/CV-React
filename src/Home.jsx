@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import jobbigtImg from "./images/Jobbigt.png";
 import snoitImg from "./images/snoit.png";
+import trueBordersImg from "./images/trueborder.png";
 
 export default function Home({ setIsTransitioning, toggleDarkMode }) {
   const [projects, setProjects] = useState([]);
@@ -44,6 +45,15 @@ export default function Home({ setIsTransitioning, toggleDarkMode }) {
 
   useEffect(() => {
     const manualProjects = [
+      {
+        id: "trueborders",
+        name: "True Borders",
+        description:
+          "Windows-app som ger spel ett perfekt borderless-läge med drag-och-släpp-fönsterplacering, profilhantering och inbyggd auto-updater.",
+        image: trueBordersImg,
+        html_url: "https://github.com/HappyHamster135/True-Borders",
+        readMorePath: "/trueborders",
+      },
       {
         id: "jobbigt",
         name: "Jobbigt AI-driven RPA",
