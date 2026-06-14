@@ -13,7 +13,7 @@ export default function Navbar({ setIsTransitioning }) {
   };
 
   return (
-    <header className="header-wrapper no-copy">
+    <header className="header-wrapper">
       <div
         key={location.pathname}
         className="top-left-name run-anim"

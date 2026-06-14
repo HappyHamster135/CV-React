@@ -527,13 +527,12 @@ nav a.active {
 .form-group textarea {
   width: 100%;
   padding: 15px;
-  border: 1px solid var(--sage);
+  border: 1px solid var(--color-sage);
   background-color: rgba(255, 255, 255, 0.6);
   border-radius: 4px;
   font-family: inherit;
   color: var(--color-charcoal);
   transition: border-color 0.3s;
-  border: 1px solid var(--sage);
 }
 
 .form-group input:focus,
@@ -853,14 +852,6 @@ nav a.active {
   .scroll-text {
     display: none !important;
   }
-
-  .portfolio-scroll-inner {
-    display: flex;
-    flex-direction: column;
-    gap: 50px;
-    transform: none !important;
-    will-change: auto;
-  }
 }
 
 /*------------------------------------------------------------/
@@ -930,4 +921,14 @@ body.jonathan-theme main {
   background-color: transparent !important;
   background: transparent !important;
   box-shadow: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

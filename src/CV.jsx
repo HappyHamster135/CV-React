@@ -37,8 +37,15 @@ export default function CV() {
         <aside className="cv-side-col">
           <section className="cv-sidebar-box">
             <h2>Kontakt</h2>
-            <p> jwenell99@gmail.com</p>
-            <p> Stockholm, Sverige</p>
+            <p>
+              <a
+                href="mailto:jwenell99@gmail.com"
+                style={{ color: "var(--color-slate)" }}
+              >
+                jwenell99@gmail.com
+              </a>
+            </p>
+            <p>Stockholm, Sverige</p>
           </section>
 
           <section className="cv-sidebar-box">

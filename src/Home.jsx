@@ -39,8 +39,14 @@ export default function Home({ setIsTransitioning, toggleDarkMode }) {
     }, 200); // matchar animation-duration nedan
   };
 
+  // Stäng modalen med Escape
   useEffect(() => {
-    isModalOpenRef.current = !!selectedProject;
+    if (!selectedProject) return;
+    const handleEsc = (e) => {
+      if (e.key === "Escape") closeModal();
+    };
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
   }, [selectedProject]);
 
   useEffect(() => {
@@ -228,7 +234,7 @@ export default function Home({ setIsTransitioning, toggleDarkMode }) {
   }, [isLoading]);
 
   return (
-    <div className="portfolio-page no-copy">
+    <div className="portfolio-page">
       <main className="full-screen-portfolio">
         {isLoading ? (
           <div style={{ margin: "0 auto", textAlign: "center" }}>
@@ -244,7 +250,15 @@ export default function Home({ setIsTransitioning, toggleDarkMode }) {
                   <div
                     className="project"
                     key={repo.id}
+                    role="button"
+                    tabIndex={0}
                     onClick={() => setSelectedProject(repo)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        setSelectedProject(repo);
+                      }
+                    }}
                   >
                     {repo.image ? (
                       <img src={repo.image} alt={repo.name} />
@@ -301,6 +315,9 @@ export default function Home({ setIsTransitioning, toggleDarkMode }) {
                 className={`modal ${isClosing ? "closing" : ""}`}
                 style={{ display: "flex" }}
                 onClick={closeModal}
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="modal-title"
               >
                 <div
                   className="modal-content"

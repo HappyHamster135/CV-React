@@ -22,7 +22,14 @@ export default function App() {
   useEffect(() => {
     if (location.pathname === "/") {
       document.body.classList.add("portfolio-page");
-      document.body.style.overflow = "hidden";
+      // Desktop kör horisontell scroll (overflow hidden),
+      // men mobil-layouten är vertikal och måste få scrolla normalt.
+      if (window.innerWidth > 1024) {
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflowY = "auto";
+        document.body.style.overflowX = "hidden";
+      }
     } else {
       document.body.classList.remove("portfolio-page");
       document.body.style.overflowY = "auto";
