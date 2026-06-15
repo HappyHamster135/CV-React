@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import jobbigtImg from "./images/Jobbigt.png";
 import snoitImg from "./images/snoit.png";
 import trueBordersImg from "./images/trueborder.png";
+import svenskGeoImg from "./images/svensk-geo.png";
 
 export default function Home({ setIsTransitioning, toggleDarkMode }) {
   const [projects, setProjects] = useState([]);
@@ -59,6 +60,15 @@ export default function Home({ setIsTransitioning, toggleDarkMode }) {
         image: trueBordersImg,
         html_url: "https://github.com/HappyHamster135/True-Borders",
         readMorePath: "/trueborders",
+      },
+      {
+        id: "svenskgeo", // Unikt ID
+        name: "Svensk Geo",
+        description:
+          "Ett interaktivt verktyg och quiz för att lära sig Sveriges geografi.",
+        image: svenskGeoImg,
+        html_url: "https://github.com/HappyHamster135/Svensk-geo.git",
+        readMorePath: "/svenskgeo",
       },
       {
         id: "jobbigt",

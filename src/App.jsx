@@ -8,6 +8,7 @@ import Contact from "./Contact";
 import Snoit from "./Snoit";
 import Jobbigt from "./Jobbigt";
 import TrueBorders from "./TrueBorders";
+import SvenskGeo from "./SvenskGeo";
 
 import jagImg from "./images/Jag.jpg";
 import jag1Img from "./images/Jag1.jpg";
@@ -147,6 +148,10 @@ export default function App() {
         <Route
           path="/trueborders"
           element={<TrueBorders setIsTransitioning={setIsTransitioning} />}
+        />
+        <Route
+          path="/svenskgeo"
+          element={<SvenskGeo setIsTransitioning={setIsTransitioning} />}
         />
         <Route
           path="/snoit"
